@@ -5,11 +5,11 @@
 
       <!-- Email -->
       <div class="mb-4 text-left">
-        <label for="email" class="block text-sm mb-1">username</label>
+        <label for="email" class="block text-sm mb-1">EMAIL</label>
         <input
           id="email"
           type="email"
-          v-model="form.username"
+          v-model="form.email"
           class="w-full p-2 bg-red-300 rounded-sm focus:outline-none"
         />
       </div>
@@ -40,7 +40,7 @@
 import { reactive } from "vue";
 
 const form = reactive({
-  username: "",
+  Email: "",
   password: "",
 });
 
