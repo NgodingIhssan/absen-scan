@@ -3,13 +3,13 @@
     <div class="bg-white p-10 rounded-md shadow-md w-96 text-center">
       <h2 class="text-lg font-semibold mb-6">LOGIN</h2>
 
-      <!-- Username -->
+      <!-- Email -->
       <div class="mb-4 text-left">
-        <label for="username" class="block text-sm mb-1">USERNAME</label>
+        <label for="email" class="block text-sm mb-1">Email</label>
         <input
-          id="username"
+          id="email"
           type="text"
-          v-model="form.username"
+          v-model="form.email"
           class="w-full p-2 bg-red-300 rounded-sm focus:outline-none"
         />
       </div>
@@ -41,20 +41,20 @@ import { reactive } from "vue";
 import { navigateTo } from "#app";
 
 const form = reactive({
-  username: "",
+  email: "",
   password: "",
 });
 
 const login = async () => {
-  if (!form.username || !form.password) {
-    return alert("Please fill in username and password");
+  if (!form.email || !form.password) {
+    return alert("Please fill in email and password");
   }
 
   try {
     const res = await $fetch("/api/login", {
       method: "POST",
       body: {
-        username: form.username,
+        email: form.email,
         password: form.password,
       },
     });
