@@ -1,17 +1,21 @@
-// src/auth/auth.module.ts
 import { Module } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
+import { UsersModule } from '../users/users.module';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from './jwt/jwt.strategy';
+import { LocalStrategy } from './local/local.strategy';
 
 @Module({
   imports: [
+    UsersModule,
     JwtModule.register({
-      secret: 'RAHASIA_JWT', // sebaiknya taruh di .env
-      signOptions: { expiresIn: '1d' },
+      secret: 'SECRET_KEY',
+      signOptions: { expiresIn: '1h' },
     }),
   ],
-  providers: [AuthService],
   controllers: [AuthController],
+  providers: [AuthService, JwtStrategy, LocalStrategy],
+  exports: [AuthService],
 })
 export class AuthModule {}
