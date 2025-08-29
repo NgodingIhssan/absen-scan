@@ -1,19 +1,17 @@
 import { PrismaClient } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
-export async function seedAuth(prisma: PrismaClient) {
-  console.log('➡️ Seeding users...');
-
-  const hashedPassword = await bcrypt.hash('password123', 10);
+export async function seedUsers(prisma: PrismaClient) {
+  const password = await bcrypt.hash('password123', 10);
 
   await prisma.user.upsert({
-    where: { username: 'superadmin' },
+    where: { email: 'superadmin@example.com' },
     update: {},
     create: {
       username: 'superadmin',
       email: 'superadmin@example.com',
       phone: '08123456789',
-      password: hashedPassword,
+      password,
       role: 'SUPER_ADMIN',
       first_name: 'Super',
       last_name: 'Admin',

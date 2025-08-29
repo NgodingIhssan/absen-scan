@@ -52,7 +52,7 @@ model Transaction {
 
   user User @relation(fields: [userId], references: [id])
 
-  @@map("transactions") // optional, kalau di DB tabelnya pakai lowercase jamak
+  @@map("transactions")
 }
 
 model Device {
@@ -63,7 +63,7 @@ model Device {
   updated_at Int    @default(dbgenerated("EXTRACT(EPOCH FROM now())"))
   deleted_at Int?
 
-  @@map("devices") // optional, kalau di DB tabelnya pakai lowercase jamak
+  @@map("devices")
 }
 
 model OpenTrip {
@@ -75,5 +75,15 @@ model OpenTrip {
   updated_at Int    @default(dbgenerated("EXTRACT(EPOCH FROM now())"))
   deleted_at Int?
 
-  @@map("open_trips") // optional, kalau di DB tabelnya pakai lowercase / snake_case
+  @@map("open_trips")
+}
+
+model Schedule {
+  id         String @id @default(uuid()) @db.Uuid()
+  title      String
+  date       Int
+  location   String?
+  created_at Int    @default(dbgenerated("EXTRACT(EPOCH FROM now())"))
+  updated_at Int    @default(dbgenerated("EXTRACT(EPOCH FROM now())"))
+  deleted_at Int?
 }
