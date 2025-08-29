@@ -3,9 +3,15 @@
     <div class="bg-white p-10 rounded-md shadow-md w-96 text-center">
       <h2 class="text-lg font-semibold mb-6">LOGIN</h2>
 
+<<<<<<< HEAD
       <!-- email -->
       <div class="mb-4 text-left">
         <label for="email" class="block text-sm mb-1">EMAIL</label>
+=======
+      <!-- Email -->
+      <div class="mb-4 text-left">
+        <label for="email" class="block text-sm mb-1">Email</label>
+>>>>>>> 0b4078729e8af73ee27c54394a61f4a3afbefd56
         <input
           id="email"
           type="text"
