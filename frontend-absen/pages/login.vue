@@ -3,13 +3,13 @@
     <div class="bg-white p-10 rounded-md shadow-md w-96 text-center">
       <h2 class="text-lg font-semibold mb-6">LOGIN</h2>
 
-      <!-- Email -->
+      <!-- Username -->
       <div class="mb-4 text-left">
-        <label for="email" class="block text-sm mb-1">EMAIL</label>
+        <label for="username" class="block text-sm mb-1">USERNAME</label>
         <input
-          id="email"
-          type="email"
-          v-model="form.email"
+          id="username"
+          type="text"
+          v-model="form.username"
           class="w-full p-2 bg-red-300 rounded-sm focus:outline-none"
         />
       </div>
@@ -38,17 +38,49 @@
 
 <script setup>
 import { reactive } from "vue";
+import { navigateTo } from "#app";
 
 const form = reactive({
-  Email: "",
+  username: "",
   password: "",
 });
 
-const login = () => {
-  if (form.email && form.password) {
-    navigateTo("/dashboard");
-  } else {
-    alert("Please fill in email and password");
+const login = async () => {
+  if (!form.username || !form.password) {
+    return alert("Please fill in username and password");
+  }
+
+  try {
+    const res = await $fetch("/api/login", {
+      method: "POST",
+      body: {
+        username: form.username,
+        password: form.password,
+      },
+    });
+
+    if (res.success) {
+      switch (res.user.role) {
+        case "superadmin":
+          navigateTo("/dashboard/superadmin");
+          break;
+        case "admin":
+          navigateTo("/dashboard/admin");
+          break;
+        case "kaprog":
+          navigateTo("/dashboard/kaprog");
+          break;
+        case "pegawai":
+          navigateTo("/dashboard/pegawai");
+          break;
+        default:
+          navigateTo("/dashboard/index");
+      }
+    } else {
+      alert(res.message || "Login failed");
+    }
+  } catch (err) {
+    alert("Error: " + err.message);
   }
 };
 </script>
