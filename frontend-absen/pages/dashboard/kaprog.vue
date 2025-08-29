@@ -18,15 +18,38 @@
     <main class="flex-1 p-8 flex justify-center items-center">
       <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md">
         <!-- Welcome -->
-        <div class="flex justify-between items-center mb-6">
+        <div class="flex justify-between items-center mb-6 relative">
           <div>
             <h2 class="text-lg font-bold">WELCOME, Ozan</h2>
             <p class="text-sm text-gray-600">INFORMATIKA</p>
           </div>
-          <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
-            <!-- Avatar / Icon bisa ditaruh sini -->
-            <span class="text-gray-600 font-bold">O</span>
-          </div>
+
+          <!-- Avatar dengan Dropdown -->
+          <div class="relative" @click="toggleDropdown">
+            <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center cursor-pointer">
+              <span class="text-gray-600 font-bold">O</span>
+            </div>
+
+            <!-- Dropdown Menu -->
+            <div
+          v-if="dropdownOpen"
+          class="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg z-10"
+        >
+          <NuxtLink
+            to="/profil"
+            class="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+          >
+            Profile
+          </NuxtLink>
+          <button
+            @click="logout"
+            class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+          >
+            Logout
+          </button>
+        </div>
+
+         </div>
         </div>
 
         <!-- Stats -->
@@ -73,13 +96,18 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 
 const time = ref('')
+const dropdownOpen = ref(false)
 
 let interval = null
 
 // Update clock function
 const updateClock = () => {
   const now = new Date()
-  time.value = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+  time.value = now.toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  })
 }
 
 onMounted(() => {
@@ -90,4 +118,14 @@ onMounted(() => {
 onBeforeUnmount(() => {
   clearInterval(interval) // biar gak memory leak
 })
+
+// Toggle dropdown
+const toggleDropdown = () => {
+  dropdownOpen.value = !dropdownOpen.value
+}
+
+// Logout action (dummy)
+const logout = () => {
+  alert('Logout berhasil!') // nanti bisa diganti route / API logout
+}
 </script>
