@@ -13,8 +13,8 @@ import { VisitorModule } from './visitor/visitor.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-
       isGlobal: true,
+      envFilePath: '.env', // pastikan NestJS membaca file .env di root
     }),
     PrismaModule,
     CommonModule,
@@ -27,5 +27,4 @@ import { VisitorModule } from './visitor/visitor.module';
   controllers: [AppController],
   providers: [AppService],
 })
-
 export class AppModule {}
