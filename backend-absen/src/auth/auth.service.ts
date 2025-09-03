@@ -1,28 +1,17 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
-import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private usersService: UsersService,
-    private jwtService: JwtService,
-  ) {}
-
-  async validateUser(username: string, pass: string) {
-    const user = await this.usersService.findByUsername(username);
-    if (user && (await bcrypt.compare(pass, user.password))) {
-      const { password, ...result } = user;
-      return result;
+  async login(email: string, password: string) {
+    // contoh sederhana (dummy)
+    if (email === 'admin@mail.com' && password === '123456') {
+      return {
+        success: true,
+        user: { role: 'admin', email },
+        token: 'fake-jwt-token'
+      };
     }
-    throw new UnauthorizedException();
-  }
 
-  async login(user: any) {
-    const payload = { username: user.username, role: user.role, sub: user.id };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+    throw new UnauthorizedException('Email atau password salah');
   }
 }

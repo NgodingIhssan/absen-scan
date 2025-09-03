@@ -3,15 +3,9 @@
     <div class="bg-white p-10 rounded-md shadow-md w-96 text-center">
       <h2 class="text-lg font-semibold mb-6">LOGIN</h2>
 
-<<<<<<< HEAD
       <!-- email -->
       <div class="mb-4 text-left">
         <label for="email" class="block text-sm mb-1">EMAIL</label>
-=======
-      <!-- Email -->
-      <div class="mb-4 text-left">
-        <label for="email" class="block text-sm mb-1">Email</label>
->>>>>>> 0b4078729e8af73ee27c54394a61f4a3afbefd56
         <input
           id="email"
           type="text"
@@ -44,12 +38,14 @@
 
 <script setup>
 import { reactive } from "vue";
-import { navigateTo } from "#app";
+import { navigateTo, useRuntimeConfig } from "#app";
 
 const form = reactive({
   email: "",
   password: "",
 });
+
+const config = useRuntimeConfig();
 
 const login = async () => {
   if (!form.email || !form.password) {
@@ -57,7 +53,7 @@ const login = async () => {
   }
 
   try {
-    const res = await $fetch("/api/login", {
+    const res = await $fetch(`${config.public.apiBase}/auth/login`, {
       method: "POST",
       body: {
         email: form.email,
@@ -80,13 +76,13 @@ const login = async () => {
           navigateTo("/dashboard/pegawai");
           break;
         default:
-          navigateTo("/dashboard/index");
+          navigateTo("/dashboard");
       }
     } else {
       alert(res.message || "Login failed");
     }
   } catch (err) {
-    alert("Error: " + err.message);
+    alert("Error: " + (err?.response?._data?.message || err.message));
   }
 };
 </script>
